@@ -2,16 +2,13 @@
 
 const express = require('express');
 
-const { User } = require('../models/user');
+const User = require('../models/user');
 
 const router = express.Router();
 
-const bodyParser = require('body-parser');
-router.use(bodyParser.json());
-
-
+/* ========== POST/CREATE AN ITEM ========== */
 router.post('/users', (req, res, next) => {
-  //the unsername and passwords fields are required
+
   const requiredFields = ['username', 'password'];
   const missingField = requiredFields.find(field => !(field in req.body));
 
@@ -20,7 +17,7 @@ router.post('/users', (req, res, next) => {
     err.status = 422;
     return next(err);
   }
-  //the fields are type string
+
   const stringFields = ['username', 'password', 'fullname'];
   const nonStringField = stringFields.find(
     field => field in req.body && typeof req.body[field] !== 'string'
@@ -32,7 +29,13 @@ router.post('/users', (req, res, next) => {
     return next(err);
   }
 
-  // The username and password should not have leading or trailing whitespace. And the endpoint should not automatically trim the values
+  // If the username and password aren't trimmed we give an error.  Users might
+  // expect that these will work without trimming (i.e. they want the password
+  // "foobar ", including the space at the end).  We need to reject such values
+  // explicitly so the users know what's happening, rather than silently
+  // trimming them and expecting the user to understand.
+  // We'll silently trim the other fields, because they aren't credentials used
+  // to log in, so it's less of a problem.
   const explicityTrimmedFields = ['username', 'password'];
   const nonTrimmedField = explicityTrimmedFields.find(
     field => req.body[field].trim() !== req.body[field]
@@ -44,14 +47,13 @@ router.post('/users', (req, res, next) => {
     return next(err);
   }
 
-
-  //
+  // bcrypt truncates after 72 characters, so let's not give the illusion
+  // of security by storing extra **unused** info
   const sizedFields = {
     username: { min: 1 },
     password: { min: 8, max: 72 }
   };
-    // The username is a minimum of 1 character
-    // The password is a minimum of 8 and max of 72 characters
+
   const tooSmallField = Object.keys(sizedFields).find(
     field => 'min' in sizedFields[field] &&
       req.body[field].trim().length < sizedFields[field].min
@@ -75,9 +77,11 @@ router.post('/users', (req, res, next) => {
     return next(err);
   }
 
-
+  // Username and password were validated as pre-trimmed
   let { username, password, fullname = '' } = req.body;
   fullname = fullname.trim();
+
+  // Remove explicit hashPassword if using pre-save middleware
   return User.hashPassword(password)
     .then(digest => {
       const newUser = {
@@ -99,4 +103,4 @@ router.post('/users', (req, res, next) => {
     });
 });
 
-module.exports = router; 
+module.exports = router;
