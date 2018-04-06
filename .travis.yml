@@ -1,10 +1,10 @@
 language: node_js
 node_js: node
 services: mongodb
-# deploy:
-#     provider: heroku
-#     api_key:
-#       secure: ea7e0943-fc2f-4ff2-9ce0-4813bca44ba2
-#     app: noteful-app-v4
-#     on:
-#       repo: tsong0220/tim-noteful-v4
+deploy:
+  provider: heroku
+  api_key:
+    secure: Rz437WbqHaYsGIsifiMWQ/Uoq3Lt+cbFqpLTjkyqhNdGUkEz4UOjgHejOFIBzeLqODubnZEIElnBm7C0TrqszieHsPAQU8FECTzI54yuhtg+2NdU8FMjkqUojxs8ptKuHYLHamrg+dBfGL2FF/x7qeoOunlAG5Xf8jaI+/JvUYL6Lw/2nHguvFK54USaygMVrTxBmT9Ea/cBvHXsMspH9yYQv4nxoIJa0eJIyV0OvAi6Oip0OOVca868ykGEMW94xvPftWBnTOyjQIvbMbF+LaTaVZjVCbXeSyFCIdfOXjpqqaeJv1sIuiu5ET7vg9p5JRcIGHKrrBVgVR1SGM2504Fq8Z5sSMZ1Aqoye3tNRCuEbXlsEo7gb+zxS8dEzhe/m4bh0/nLubkF45juYaecbbbdEzF2dD3SQeuBQWf8Kf44Z92HpB6rJynMufwqmaDmEKD/WePKGU6PaYDJihRCbKJE5OmzANjgWX/G8bm6AN+MIsNmGXjW29wYAGOs46G/Y10G/FLi5Y/j0TaXnQIpkpTu2XIMH334twqQEVhPn/dm9a/6YPuqCMFpWrSY/z+E/eF9YPJl8+Hz07EDZ44LNdRv9EI4NnHin8EUvLBbhFxJs03cg2mOvsqSCw9Ojjtm8ePHZTFK3BKH505YVl/ekITnMd5nn5cN9gcR2zwbxdU=
+  app: npm test
+  on:
+    repo: thinkful-ei19/tim-noteful-v4
