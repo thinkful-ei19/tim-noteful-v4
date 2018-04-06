@@ -5,23 +5,31 @@ const chaiHttp = require('chai-http');
 const mongoose = require('mongoose');
 
 const { TEST_MONGODB_URI } = require('../config');
-
+const User = require('../modles/user');
 const Folder = require('../models/folder');
 const seedFolders = require('../db/seed/folders');
-
+const seedUsers = require('../db/seed/users');
 
 const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Noteful API - Folders', function () {
+describe.only('Noteful API - Folders', function () {
+  
+  let user;
+  let token;
+  
   before(function () {
     return mongoose.connect(TEST_MONGODB_URI)
       .then(() => mongoose.connection.db.dropDatabase());
   });
 
   beforeEach(function () {
-    return Folder.insertMany(seedFolders)
+    return Promise.all([
+      User.insertMany(seedUsers),   
+      Folder.insertMany(seedFolders),
+      Folder.ensureIndexes()
+    ])
       .then(() => Folder.ensureIndexes());
   });
 
