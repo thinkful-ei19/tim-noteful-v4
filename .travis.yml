@@ -4,7 +4,7 @@ services: mongodb
 # deploy:
 #     provider: heroku
 #     api_key:
-#       secure: [YOUR-API-KEY]
-#     app: [YOUR-APP-NAME]
+#       secure: ea7e0943-fc2f-4ff2-9ce0-4813bca44ba2
+#     app: noteful-app-v4
 #     on:
-#       repo: [YOUR-APP-REPO]
+#       repo: tsong0220/tim-noteful-v4

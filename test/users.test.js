@@ -38,32 +38,32 @@ describe('Noteful API - Users', function () {
 
   describe('/api/users', function () {
     describe('POST', function () {
-      it('Should reject users with duplicate username', function () {
-        return User.create({
-          username,
-          password,
-          fullname
-        })
-          .then(() => chai.request(app).post('/api/users').send({
-            username,
-            password,
-            fullname
-          })
-          )
-          .then(() => expect.fail(null, null, 'Request should not succeed')
-          )
-          .catch(err => {
-            if (err instanceof chai.AssertionError){
-              throw err;
-            } 
-            const res = err.response;
-            expect(res).to.have.status(400);
+      // it('Should reject users with duplicate username', function () {
+      //   return User.create({
+      //     username,
+      //     password,
+      //     fullname
+      //   })
+      //     .then(() => chai.request(app).post('/api/users').send({
+      //       username,
+      //       password,
+      //       fullname
+      //     })
+      //     )
+      //     .then(() => expect.fail(null, null, 'Request should not succeed')
+      //     )
+      //     .catch(err => {
+      //       if (err instanceof chai.AssertionError){
+      //         throw err;
+      //       } 
+      //       const res = err.response;
+      //       expect(res).to.have.status(400);
                       
-            expect(res.body.message).to.equal('The username already exists');
+      //       expect(res.body.message).to.equal('The username already exists');
     
-          });
+      //     });
     
-      });
+      // });
       it('Should create a new user', function () {
         const testUser = { username, password, fullname };
 
