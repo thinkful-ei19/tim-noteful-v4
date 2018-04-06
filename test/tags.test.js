@@ -4,25 +4,38 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const mongoose = require('mongoose');
 
-const { TEST_MONGODB_URI } = require('../config');
+const {JWT_SECRET, TEST_MONGODB_URI } = require('../config');
 
 const Tag = require('../models/tag');
+const User = require('../modles/user');
 const seedTags = require('../db/seed/tags');
+const seedUsers = require('../db/seed/users');
 
+const jwt = require('jsonwebtoken');
 
 const expect = chai.expect;
 
 chai.use(chaiHttp);
 
 describe('Noteful API - Tags', function () {
+  let user;
+  let token; 
+
   before(function () {
     return mongoose.connect(TEST_MONGODB_URI)
       .then(() => mongoose.connection.db.dropDatabase());
   });
 
   beforeEach(function () {
-    return Tag.insertMany(seedTags)
-      .then(() => Tag.ensureIndexes());
+    return Promise.all([
+      User.insertMany(seedUsers),   
+      Tag.insertMany(seedTags),
+      Tag.ensureIndexes()
+    ])
+      .then(([users]) => {
+        user = users[0];
+        token = jwt.sign({user}, JWT_SECRET, {subject: user.username});
+      });
   });
 
   afterEach(function () {
