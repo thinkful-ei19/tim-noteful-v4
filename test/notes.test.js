@@ -4,28 +4,60 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const mongoose = require('mongoose');
 
-const { TEST_MONGODB_URI } = require('../config');
+const {JWT_SECRET, TEST_MONGODB_URI } = require('../config');
 
+const User = require('../models/user');
 const Note = require('../models/note');
 const Folder = require('../models/folder');
+const Tag = require('../models/tag');
 const seedNotes = require('../db/seed/notes');
+const seedUsers = require('../db/seed/users');
 const seedFolders = require('../db/seed/folders');
-
+const seedTags = require('../db/seed/tags');
+const jwt = require('jsonwebtoken');
 const expect = chai.expect;
 
 chai.use(chaiHttp);
 
 describe('Noteful API - Notes', function () {
+  let user = {};
+  let token;
+  
   before(function () {
     return mongoose.connect(TEST_MONGODB_URI)
       .then(() => mongoose.connection.db.dropDatabase());
   });
 
   beforeEach(function () {
-    const noteInsertPromise = Note.insertMany(seedNotes);
-    const folderInsertPromise = Folder.insertMany(seedFolders);
-    return Promise.all([noteInsertPromise, folderInsertPromise])
-      .then(() => Note.ensureIndexes());
+
+    // const noteInsertPromise = Note.insertMany(seedNotes);
+    // const folderInsertPromise = Folder.insertMany(seedFolders);
+    // return Promise.all([noteInsertPromise, folderInsertPromise])
+    //   .then(() => Note.ensureIndexes());
+
+    // return Promise.all([
+    //   Note.insertMany(seedNotes),
+    //   Folder.insertMany(seedFolders),
+    //   Folder.ensureIndexes(),   
+    //   Tag.insertMany(seedTags),
+    //   Tag.ensureIndexes(),
+    //   User.insertMany(seedUsers),
+    //   User.ensureIndexes()
+      
+    // ])
+    //   .then(([users]) => {
+    //     user = users[0];
+    //     token = jwt.sign({user}, JWT_SECRET, {subject: user.username});
+    //   });
+    return User.insertMany(seedUsers)
+      .then(results => {
+        user = results[0];
+        token = jwt.sign({ user }, JWT_SECRET, { subject: user.username });
+        const noteInsertPromise = Note.insertMany(seedNotes);
+        const folderInsertPromise = Folder.insertMany(seedFolders);
+        return Promise.all([noteInsertPromise, folderInsertPromise])
+          .then(() => Note.ensureIndexes());
+      });
   });
 
   afterEach(function () {
@@ -38,15 +70,18 @@ describe('Noteful API - Notes', function () {
 
   describe('GET /api/notes', function () {
 
-    it('should return the correct number of Notes', function () {
-      const dbPromise = Note.find();
-      const apiPromise = chai.request(app).get('/api/notes');
+    it.only('should return the correct number of Notes', function () {
+      const dbPromise = Note.find({ userId: user.id });
+      const apiPromise = chai.request(app)
+        .get('/api/notes')
+        .set('Authorization', `Bearer ${token}`);
 
       return Promise.all([dbPromise, apiPromise])
         .then(([data, res]) => {
           expect(res).to.have.status(200);
           expect(res).to.be.json;
           expect(res.body).to.be.a('array');
+          console.log(data);
           expect(res.body).to.have.length(data.length);
         });
     });

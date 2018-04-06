@@ -197,7 +197,7 @@ describe('Noteful API - Folders', function () {
 
   });
 
-  describe.only('PUT /api/folders/:id', function () {
+  describe('PUT /api/folders/:id', function () {
 
     it('should update the folder', function () {
       const updateItem = {
