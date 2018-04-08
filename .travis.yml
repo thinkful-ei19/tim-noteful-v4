@@ -1,10 +1,10 @@
 language: node_js
 node_js: node
 services: mongodb
-deploy:
-  provider: heroku
-  api_key:
-    secure: d1XgTcPH8oSHXGfZAXRXrsuAqFaruPVtVsvh6sW4fcDkpRg10G3L/yeI39rOkwmELmpkO4sfMCNgj8tLkwZPoC6LT2jvvwl1NQQIDLJXj9J75bVwZDGVws4WCsbR0FHJtkV74ccZcUvkG026vAcWTUoqESDSg5qdZ/iBrseA7klxtLqUouo3t2grpvvsGIIUd5BG+DXLE+ZbS2P7LoVHconq5lZ65ay9X8aN6Rp3oS9WCqI/2hQncUAgyzDinNR+zfsOE3olgkt/mF0ogi3qXYhr940zE3Q1G61L2voxo0SmVfeowRmQ8yB6avL5nzwdoxbQPWKhwW919nsrEn02wyvWJ1/Db/FvybV7DQ6TqL1459O5Gdd3BlxC9aDeuZB04Q1mcQeGlE+jO1Lz+tQtSGylu5DzhkdxdZwS/FVa2NHRhp7z6br85aJdHmiNVNa3blLh/AW0h4wYQQ2mswHr7C142J0/KCgRg+Agtt0HxV27HvK+FQCNFUZytda56Y97UymrwuBIptihQAwI2AADJjCJ6HNi8DJpCp50I/LEGDRSN1eEXX2TCX1cmul+AJ257vkRXzzhn3sJxYnghMkZN+2ssFzi9yqhu1S754TlJSR3PdywCPMsprEh4nIrQlFQChqvKyV8ju82Gaw4rhQwiEFbWdEqVaZ4H+vH3cKRTCk=
-  app: tim-noteful-v4
-  on:
-    repo: thinkful-ei19/tim-noteful-v4
+# deploy:
+#   provider: heroku
+#   api_key:
+#     secure: d1XgTcPH8oSHXGfZAXRXrsuAqFaruPVtVsvh6sW4fcDkpRg10G3L/yeI39rOkwmELmpkO4sfMCNgj8tLkwZPoC6LT2jvvwl1NQQIDLJXj9J75bVwZDGVws4WCsbR0FHJtkV74ccZcUvkG026vAcWTUoqESDSg5qdZ/iBrseA7klxtLqUouo3t2grpvvsGIIUd5BG+DXLE+ZbS2P7LoVHconq5lZ65ay9X8aN6Rp3oS9WCqI/2hQncUAgyzDinNR+zfsOE3olgkt/mF0ogi3qXYhr940zE3Q1G61L2voxo0SmVfeowRmQ8yB6avL5nzwdoxbQPWKhwW919nsrEn02wyvWJ1/Db/FvybV7DQ6TqL1459O5Gdd3BlxC9aDeuZB04Q1mcQeGlE+jO1Lz+tQtSGylu5DzhkdxdZwS/FVa2NHRhp7z6br85aJdHmiNVNa3blLh/AW0h4wYQQ2mswHr7C142J0/KCgRg+Agtt0HxV27HvK+FQCNFUZytda56Y97UymrwuBIptihQAwI2AADJjCJ6HNi8DJpCp50I/LEGDRSN1eEXX2TCX1cmul+AJ257vkRXzzhn3sJxYnghMkZN+2ssFzi9yqhu1S754TlJSR3PdywCPMsprEh4nIrQlFQChqvKyV8ju82Gaw4rhQwiEFbWdEqVaZ4H+vH3cKRTCk=
+#   app: noteful-app-v4-timothy
+#   on:
+#     repo: thinkful-ei19/tim-noteful-v4
